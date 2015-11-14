@@ -13,17 +13,25 @@ var Grapher = function(canvasId, data) {
     this.width = this.canvas.width();
     this.height = this.canvas.height();
     this.data = data;
+
+    this.running = false;
 };
 
 Grapher.prototype.graph = function() {
+    this.running = true;
+
     this.context.clearRect(0, 0, this.width, this.height);
     this._draw();
 };
 
+Grapher.prototype.stop = function() {
+    this.running = false;
+}
+
 Grapher.prototype._draw = function() {
     var curData = this.getData();
 
-    if (curData.length > 0) {
+    if (curData.length > 0 && this.running) {
         var that = this;
         drawVisual = requestAnimationFrame(function() {
             that._draw();
