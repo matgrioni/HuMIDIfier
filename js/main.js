@@ -7,4 +7,12 @@ $(document).ready(function() {
 
     m = new Microphone();
     m.request();
+
+    $("#record").on("click", function() {
+        if (m.allowed) {
+            m.getData();
+        } else {
+            alert("You never allowed the microphone. Refresh");
+        }
+    });
 });

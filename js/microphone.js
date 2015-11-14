@@ -9,6 +9,9 @@
 var Microphone = function() {
     this.audioCtx = new (window.AudioContext || window.webkitAudioContext)();
     this.analyser = this.audioCtx.createAnalyser();
+    this.analyser.fftSize = 2048;
+    
+    this.allowed = false;
 }
 
 Microphone.prototype.request = function() {
@@ -22,6 +25,8 @@ Microphone.prototype.request = function() {
                 that.stream = stream;
                 that.source = that.audioCtx.createMediaStreamSource(stream);
                 that.source.connect(that.analyser);
+
+                that.allowed = true;
             },
 
             function(err) {
@@ -29,4 +34,12 @@ Microphone.prototype.request = function() {
             }
         );
     }
-}
+};
+
+Microphone.prototype.getData = function() {
+    var bufferLength = this.analyser.frequencyBinCount;
+    var dataArray = new Uint8Array(bufferLength);
+    this.analyser.getByteTimeDomainData(dataArray);
+
+    console.log(dataArray);
+};
