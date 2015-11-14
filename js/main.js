@@ -5,12 +5,13 @@ $(document).ready(function() {
                               navigator.mozGetUserMedia ||
                               navigator.msGetUserMedia);
 
-    m = new Microphone();
+    m = new Microphone(2048);
     m.request();
 
     $("#record").on("click", function() {
         if (m.allowed) {
-            m.getData();
+            o = new Oscilloscope("oscilloscope", m);
+            o.graph();
         } else {
             alert("You never allowed the microphone. Refresh");
         }

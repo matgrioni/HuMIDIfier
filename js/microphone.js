@@ -6,13 +6,15 @@
 * and handling stream sources and what not.
 ********************************************************************/
 
-var Microphone = function() {
+var Microphone = function(fftSize) {
     this.audioCtx = new (window.AudioContext || window.webkitAudioContext)();
     this.analyser = this.audioCtx.createAnalyser();
-    this.analyser.fftSize = 2048;
+    this.analyser.fftSize = fftSize;
     
     this.allowed = false;
-}
+    this.bufferLength = this.analyser.frequencyBinCount;
+    this.data = new Uint8Array(this.bufferLength);
+};
 
 Microphone.prototype.request = function() {
     var that = this;
@@ -37,9 +39,6 @@ Microphone.prototype.request = function() {
 };
 
 Microphone.prototype.getData = function() {
-    var bufferLength = this.analyser.frequencyBinCount;
-    var dataArray = new Uint8Array(bufferLength);
-    this.analyser.getByteTimeDomainData(dataArray);
-
-    console.log(dataArray);
+    this.analyser.getByteFrequencyData(this.data);
+    return this.data;
 };
