@@ -44,7 +44,7 @@ Grapher.prototype._draw = function() {
         this.context.fillStyle = "rgb(0, 0, 0)";
         this.context.fillRect(0, 0, this.width, this.height);
 
-        this.context.fillStyle = "rgb(100, 50, 50)";
+        this.context.fillStyle = "rgb(66, 220, 163)";
         var barWidth = (this.width / curData.length) * 2.5;
         for(var i = 0; i < curData.length; i++) {
             var barHeight = curData[i];

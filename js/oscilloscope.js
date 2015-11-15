@@ -17,6 +17,8 @@ var Oscilloscope = function(canvasId, source, outputId) {
 
 Oscilloscope.prototype = Object.create(Grapher.prototype);
 Oscilloscope.prototype.graph = function() {
+    this.totalData = [];
+
     var that = this;
     Grapher.prototype.graph.call(this, function(data) {
         var note = that.sample.note(data);

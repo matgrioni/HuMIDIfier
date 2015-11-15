@@ -13,7 +13,8 @@ $(document).ready(function() {
 
     var o = null;
 
-    var noteDisplay = $("#note");
+    var keyDisplay = $("#key");
+    var chordsDisplay = $("#chords");
 
     $("#record").on("click", function() {
         if (m.allowed) {
@@ -27,9 +28,16 @@ $(document).ready(function() {
     $("#stop").on("click", function() {
         if (o !== null) {
             o.stop();
-            frequencies = noteFrequencies(o.total());
-            console.log(frequencies);
         }
+    });
+
+    var that = this;
+    $(".music_type").on("click", function() {
+        frequencies = noteFrequencies(o.total());
+        var g = new Generator($(this).html().toLowerCase(), frequencies);
+        g.load(function() {
+            keyDisplay.html(g.key);
+        });
     });
 });
 
