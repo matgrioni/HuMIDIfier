@@ -21,8 +21,10 @@ $(document).ready(function() {
 
     $("#stop").on("click", function() {
         if (o !== null) {
-            console.log(o.total());
             o.stop();
         }
     });
+
+    var noteDisplay = $("#note");
+    noteDisplay.html("-");
 });
