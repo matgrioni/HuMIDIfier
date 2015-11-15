@@ -5,16 +5,21 @@
 *
 ********************************************************************/
 
-var Oscilloscope = function(canvasId, source) {
+var Oscilloscope = function(canvasId, source, outputId) {
+    Grapher.call(this, canvasId, source.getData());
+
     this.source = source;
-    Grapher.call(this, canvasId, this.source.getData());
+    this.output = $("#" + outputId);
     this.totalData = [];
+    this.sample = new Sample(source.getSampleRate());
 }
 
 Oscilloscope.prototype = Object.create(Grapher.prototype);
-Oscilloscope.prototype._draw = function() {
-    this.totalData.push(this.getData());
-    Grapher.prototype._draw.call(this);
+Oscilloscope.prototype.graph = function() {
+    var that = this;
+    Grapher.prototype.graph.call(this, function(data) {
+        that.output.html(that.sample.pitch(data));
+    });
 };
 
 Oscilloscope.prototype.getData = function() {

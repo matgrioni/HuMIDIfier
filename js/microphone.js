@@ -47,6 +47,10 @@ Microphone.prototype.request = function(success, error) {
 };
 
 Microphone.prototype.getData = function() {
-    this.analyser.getByteFrequencyData(this.data);
+    this.analyser.getByteTimeDomainData(this.data);
     return this.data;
 };
+
+Microphone.prototype.getSampleRate = function() {
+    return this.audioCtx.sampleRate;
+}

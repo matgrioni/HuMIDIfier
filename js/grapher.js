@@ -17,7 +17,8 @@ var Grapher = function(canvasId, data) {
     this.running = false;
 };
 
-Grapher.prototype.graph = function() {
+Grapher.prototype.graph = function(updateCallback) {
+    this.updateCallback = updateCallback;
     this.running = true;
 
     this.context.clearRect(0, 0, this.width, this.height);
@@ -35,6 +36,8 @@ Grapher.prototype._draw = function() {
         var that = this;
         drawVisual = requestAnimationFrame(function() {
             that._draw();
+            if(that.updateCallback)
+                that.updateCallback(curData);
         });
 
         this.context.clearRect(0, 0, this.width, this.height);

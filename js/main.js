@@ -10,9 +10,11 @@ $(document).ready(function() {
 
     var o = null;
 
+    var noteDisplay = $("#note");
+
     $("#record").on("click", function() {
         if (m.allowed) {
-            o = new Oscilloscope("oscilloscope", m);
+            o = new Oscilloscope("oscilloscope", m, "node");
             o.graph();
         } else {
             alert("You never allowed the microphone. Refresh");
@@ -24,7 +26,4 @@ $(document).ready(function() {
             o.stop();
         }
     });
-
-    var noteDisplay = $("#note");
-    noteDisplay.html("-");
 });
