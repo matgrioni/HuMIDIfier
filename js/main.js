@@ -1,3 +1,6 @@
+notes = ["c", "csharp", "d", "dsharp", "e", "f", "fsharp", "g", "gsharp", "a",
+         "asharp", "b"];
+
 $(document).ready(function() {
     // Polyfill for multiple browser support for navigator object
     navigator.getUserMedia = (navigator.getUserMedia ||
@@ -24,6 +27,25 @@ $(document).ready(function() {
     $("#stop").on("click", function() {
         if (o !== null) {
             o.stop();
+            frequencies = noteFrequencies(o.total());
+            console.log(frequencies);
         }
     });
 });
+
+function noteFrequencies(data) {
+    frequencies = []
+    for(var i = 0; i < notes.length; i++) {
+        var curNote = notes[i];
+
+        var counter = 0;
+        for(var j = 0; j < data.length; j++) {
+            if(data[j] == curNote)
+                counter++;
+        }
+
+        frequencies.push({"note": curNote, "freq": counter});
+    }
+
+    return frequencies;
+}

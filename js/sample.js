@@ -8,8 +8,9 @@
 * input source.
 ********************************************************************/
 
-var Sample = function(sampleRate) {
+var Sample = function(sampleRate, notes) {
     this.sampleRate = sampleRate;
+    this.notes = notes;
 };
 
 Sample.prototype.pitch = function(data) {
@@ -57,4 +58,16 @@ Sample.prototype.pitch = function(data) {
     }
 
     return result;
+};
+
+Sample.prototype.note = function(data) {
+    var note = "";
+    var freq = this.pitch(data);
+    if (freq > 0) {
+        var key = this.notes.length * (Math.log(freq / 440) / Math.log(2));
+        var noteIndex = (Math.round(key) + 69) % 12;
+        note = this.notes[noteIndex];
+    }
+
+    return note;
 };
